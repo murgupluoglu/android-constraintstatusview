@@ -2,6 +2,7 @@ package com.murgupluoglu.constraintstatusview
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
@@ -10,6 +11,7 @@ import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
+import java.util.*
 
 /**
  * Created by Mustafa Urgupluoglu on 12.02.2019.
@@ -20,6 +22,7 @@ class ConstraintStatusView @JvmOverloads constructor(
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
     companion object {
+        const val TAG_STATUSVIEW = "STATUSVIEW"
         const val TAG_STATUS_LOADING = "STATUSVIEW_STATUS_LOADING"
         const val TAG_STATUS_ERROR = "STATUSVIEW_STATUS_ERROR"
         const val TAG_STATUS_EMPTY = "STATUSVIEW_STATUS_EMPTY"
@@ -83,6 +86,22 @@ class ConstraintStatusView @JvmOverloads constructor(
     }
 
     fun showAirplaneMode(layoutId: Int = resIdStatusAirplaneMode, tag : String = TAG_STATUS_AIRPLANE_MODE) : View {
+        hideAll()
+        val view = getView(tag, layoutId)
+        view.visibility = View.VISIBLE
+        return view
+    }
+
+    /**
+     * @param layoutId Layout resource file
+     * @param tag Must be contains uppercase STATUSVIEW text otherwise view cannot be hide
+     */
+    fun showCustom(layoutId: Int, userTag : String = ""): View {
+        var tag = userTag
+        if(tag.isEmpty()){
+            tag = "${TAG_STATUSVIEW}_${UUID.randomUUID()}"
+            Log.e(TAG_STATUSVIEW, tag)
+        }
         hideAll()
         val view = getView(tag, layoutId)
         view.visibility = View.VISIBLE
@@ -165,7 +184,7 @@ class ConstraintStatusView @JvmOverloads constructor(
         for(i in 0 until childCount){
             val view = getChildAt(i)
             if(view.tag != null
-                && view.tag.toString().contains("STATUSVIEW")){
+                && view.tag.toString().contains(TAG_STATUSVIEW)){
                 view.visibility = View.GONE
             }
         }

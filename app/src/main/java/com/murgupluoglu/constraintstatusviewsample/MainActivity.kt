@@ -56,6 +56,9 @@ class MainActivity : AppCompatActivity() {
                     Log.e(TAG, "showCustom Button clicked")
                 })
                 delay(2 * 1000)
+                statusView.showCustom(R.layout.custom_status_error)
+                delay(2 * 1000)
+                statusView.showContent()
             }
         }
 
