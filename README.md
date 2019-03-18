@@ -1,4 +1,5 @@
 # Constraint Status View
+[![](https://jitpack.io/v/murgupluoglu/constraintstatusview.svg)](https://jitpack.io/#murgupluoglu/constraintstatusview)
 ```gradle
 allprojects {
     repositories {
@@ -9,6 +10,6 @@ allprojects {
 ```
 ```gradle
 dependencies {
-    implementation 'com.github.murgupluoglu:constraintstatusview:1.0.0'
+    implementation 'com.github.murgupluoglu:constraintstatusview:lastVersion'
 }
 ```
