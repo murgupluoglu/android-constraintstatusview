@@ -153,6 +153,14 @@ class ConstraintStatusView @JvmOverloads constructor(
             view.id = View.generateViewId()
             view.tag = tag
 
+
+            for (i in 0 until childCount){
+                val child = getChildAt(i)
+                if(child.id == View.NO_ID){
+                    child.id = View.generateViewId()
+                }
+            }
+
             addView(view)
 
             val set = ConstraintSet()
