@@ -58,35 +58,35 @@ class ConstraintStatusView @JvmOverloads constructor(
     }
 
     fun showLoading(layoutId: Int = resIdStatusLoading, tag : String = TAG_STATUS_LOADING) : View {
-        hideAll()
+        hideEverything()
         val view = getView(tag, layoutId)
         view.visibility = View.VISIBLE
         return view
     }
 
     fun showError(layoutId: Int = resIdStatusError, tag : String = TAG_STATUS_ERROR) : View {
-        hideAll()
+        hideEverything()
         val view = getView(tag, layoutId)
         view.visibility = View.VISIBLE
         return view
     }
 
     fun showEmpty(layoutId: Int = resIdStatusEmpty, tag : String = TAG_STATUS_EMPTY) : View {
-        hideAll()
+        hideEverything()
         val view = getView(tag, layoutId)
         view.visibility = View.VISIBLE
         return view
     }
 
     fun showNoConnection(layoutId: Int = resIdStatusNoConnection, tag : String = TAG_STATUS_NO_CONNECTION) : View {
-        hideAll()
+        hideEverything()
         val view = getView(tag, layoutId)
         view.visibility = View.VISIBLE
         return view
     }
 
     fun showAirplaneMode(layoutId: Int = resIdStatusAirplaneMode, tag : String = TAG_STATUS_AIRPLANE_MODE) : View {
-        hideAll()
+        hideEverything()
         val view = getView(tag, layoutId)
         view.visibility = View.VISIBLE
         return view
@@ -102,14 +102,14 @@ class ConstraintStatusView @JvmOverloads constructor(
             tag = "${TAG_STATUSVIEW}_${UUID.randomUUID()}"
             Log.e(TAG_STATUSVIEW, tag)
         }
-        hideAll()
+        hideEverything()
         val view = getView(tag, layoutId)
         view.visibility = View.VISIBLE
         return view
     }
 
     fun showCustom(@DrawableRes iconRes: Int = -1, text : String?, buttonText : String?, onClickListener: OnClickListener?) : View {
-        hideAll()
+        hideEverything()
         val view = getView(TAG_STATUS_CUSTOM, resIdStatusCustom)
         val imageView = view.findViewById<ImageView>(R.id.statusCustomImageView)
         val textView = view.findViewById<TextView>(R.id.statusCustomTextView)
@@ -139,10 +139,6 @@ class ConstraintStatusView @JvmOverloads constructor(
         }
         view.visibility = View.VISIBLE
         return view
-    }
-
-    fun showContent(){
-        hideAll()
     }
 
     private fun getView(tag : String, layoutId : Int) : View {
@@ -188,13 +184,22 @@ class ConstraintStatusView @JvmOverloads constructor(
         return view!!
     }
 
-    private fun hideAll(){
+    fun showContent(){
         for(i in 0 until childCount){
             val view = getChildAt(i)
             if(view.tag != null
                 && view.tag.toString().contains(TAG_STATUSVIEW)){
                 view.visibility = View.GONE
+            }else{
+                view.visibility = View.VISIBLE
             }
+        }
+    }
+
+    private fun hideEverything(){
+        for(i in 0 until childCount){
+            val view = getChildAt(i)
+            view.visibility = View.GONE
         }
     }
 }
