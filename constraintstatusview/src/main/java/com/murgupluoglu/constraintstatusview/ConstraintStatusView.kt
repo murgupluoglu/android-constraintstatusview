@@ -97,12 +97,12 @@ class ConstraintStatusView @JvmOverloads constructor(
      * @param tag Must be contains uppercase STATUSVIEW text otherwise view cannot be hide
      */
     fun showCustom(layoutId: Int, userTag : String = ""): View {
+        hideEverything()
         var tag = userTag
         if(tag.isEmpty()){
             tag = "${TAG_STATUSVIEW}_${UUID.randomUUID()}"
             Log.e(TAG_STATUSVIEW, tag)
         }
-        hideEverything()
         val view = getView(tag, layoutId)
         view.visibility = View.VISIBLE
         return view
@@ -144,28 +144,10 @@ class ConstraintStatusView @JvmOverloads constructor(
     private fun getView(tag : String, layoutId : Int) : View {
         var view : View? = findViewWithTag(tag)
         if(view == null){
-            view = layoutInflater.inflate(layoutId, null)
-            view.layoutParams = LinearLayoutCompat.LayoutParams(0, 0)
-            view.id = View.generateViewId()
+            view = layoutInflater.inflate(layoutId, this@ConstraintStatusView, false)
             view.tag = tag
 
-
-            for (i in 0 until childCount){
-                val child = getChildAt(i)
-                if(child.id == View.NO_ID){
-                    child.id = View.generateViewId()
-                }
-            }
-
             addView(view)
-
-            val set = ConstraintSet()
-            set.clone(this@ConstraintStatusView)
-            set.connect(view.id, ConstraintSet.TOP, id, ConstraintSet.TOP, 0)
-            set.connect(view.id, ConstraintSet.BOTTOM, id, ConstraintSet.BOTTOM, 0)
-            set.connect(view.id, ConstraintSet.RIGHT, id, ConstraintSet.RIGHT, 0)
-            set.connect(view.id, ConstraintSet.LEFT, id, ConstraintSet.LEFT, 0)
-            set.applyTo(this@ConstraintStatusView)
 
             val statusNoConnectionRetryButton : View? = view.findViewById(R.id.statusNoConnectionRetryButton)
             val statusAirplaneModeButton : View? = view.findViewById(R.id.statusAirplaneModeButton)
