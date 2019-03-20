@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
        CoroutineScope(Dispatchers.IO).launch {
             withContext(Dispatchers.Main) {
-                test1()
+                test2()
             }
         }
 

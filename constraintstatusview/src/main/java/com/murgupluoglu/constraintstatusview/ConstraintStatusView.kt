@@ -8,9 +8,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.DrawableRes
-import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
 import java.util.*
 
 /**
@@ -58,35 +56,35 @@ class ConstraintStatusView @JvmOverloads constructor(
     }
 
     fun showLoading(layoutId: Int = resIdStatusLoading, tag : String = TAG_STATUS_LOADING) : View {
-        hideEverything()
+        showContent()
         val view = getView(tag, layoutId)
         view.visibility = View.VISIBLE
         return view
     }
 
     fun showError(layoutId: Int = resIdStatusError, tag : String = TAG_STATUS_ERROR) : View {
-        hideEverything()
+        showContent()
         val view = getView(tag, layoutId)
         view.visibility = View.VISIBLE
         return view
     }
 
     fun showEmpty(layoutId: Int = resIdStatusEmpty, tag : String = TAG_STATUS_EMPTY) : View {
-        hideEverything()
+        showContent()
         val view = getView(tag, layoutId)
         view.visibility = View.VISIBLE
         return view
     }
 
     fun showNoConnection(layoutId: Int = resIdStatusNoConnection, tag : String = TAG_STATUS_NO_CONNECTION) : View {
-        hideEverything()
+        showContent()
         val view = getView(tag, layoutId)
         view.visibility = View.VISIBLE
         return view
     }
 
     fun showAirplaneMode(layoutId: Int = resIdStatusAirplaneMode, tag : String = TAG_STATUS_AIRPLANE_MODE) : View {
-        hideEverything()
+        showContent()
         val view = getView(tag, layoutId)
         view.visibility = View.VISIBLE
         return view
@@ -97,7 +95,7 @@ class ConstraintStatusView @JvmOverloads constructor(
      * @param tag Must be contains uppercase STATUSVIEW text otherwise view cannot be hide
      */
     fun showCustom(layoutId: Int, userTag : String = ""): View {
-        hideEverything()
+        showContent()
         var tag = userTag
         if(tag.isEmpty()){
             tag = "${TAG_STATUSVIEW}_${UUID.randomUUID()}"
@@ -109,7 +107,7 @@ class ConstraintStatusView @JvmOverloads constructor(
     }
 
     fun showCustom(@DrawableRes iconRes: Int = -1, text : String?, buttonText : String?, onClickListener: OnClickListener?) : View {
-        hideEverything()
+        showContent()
         val view = getView(TAG_STATUS_CUSTOM, resIdStatusCustom)
         val imageView = view.findViewById<ImageView>(R.id.statusCustomImageView)
         val textView = view.findViewById<TextView>(R.id.statusCustomTextView)
@@ -169,19 +167,9 @@ class ConstraintStatusView @JvmOverloads constructor(
     fun showContent(){
         for(i in 0 until childCount){
             val view = getChildAt(i)
-            if(view.tag != null
-                && view.tag.toString().contains(TAG_STATUSVIEW)){
+            if(view.tag != null && view.tag.toString().contains(TAG_STATUSVIEW)){
                 view.visibility = View.GONE
-            }else{
-                view.visibility = View.VISIBLE
             }
-        }
-    }
-
-    private fun hideEverything(){
-        for(i in 0 until childCount){
-            val view = getChildAt(i)
-            view.visibility = View.GONE
         }
     }
 }
