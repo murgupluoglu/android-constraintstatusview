@@ -6,7 +6,10 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import com.murgupluoglu.constraintstatusview.databinding.StatusErrorBinding
 import com.murgupluoglu.constraintstatusviewsample.databinding.ActivityMainBinding
+import com.murgupluoglu.constraintstatusviewsample.databinding.CustomStatusErrorBinding
+import com.murgupluoglu.constraintstatusviewsample.databinding.CustomStatusLoadingBinding
 import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
@@ -44,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         delay(2 * 1000)
         binding.statusView.showError()
         delay(2 * 1000)
-        val customShowErrorView = binding.statusView.showError(R.layout.custom_status_error, "STATUSVIEW_CUSTOM_ERROR")
+        val customShowErrorView = binding.statusView.showError(CustomStatusErrorBinding.inflate(layoutInflater), "STATUSVIEW_CUSTOM_ERROR")
         val customErrorRetryButton : Button = customShowErrorView.findViewById(R.id.customErrorRetryButton)
         customErrorRetryButton.setOnClickListener {
             Log.e(TAG, "customErrorRetryButton clicked")
@@ -52,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         delay(2 * 1000)
         binding.statusView.showLoading()
         delay(2 * 1000)
-        val customLoadingView = binding.statusView.showLoading(R.layout.custom_status_loading, "STATUSVIEW_CUSTOM_LOADING")
+        val customLoadingView = binding.statusView.showLoading(CustomStatusLoadingBinding.inflate(layoutInflater), "STATUSVIEW_CUSTOM_LOADING")
         val customLoadingTextView : TextView = customLoadingView.findViewById(R.id.customLoadingTextView)
         customLoadingTextView.text = "Updated Custom Loading Message"
         delay(2 * 1000)
@@ -60,13 +63,11 @@ class MainActivity : AppCompatActivity() {
         delay(2 * 1000)
         binding.statusView.showNoConnection()
         delay(4 * 1000)
-        binding.statusView.showError(R.layout.custom_status_error, "STATUSVIEW_CUSTOM_ERROR")
+        binding.statusView.showError(StatusErrorBinding.inflate(layoutInflater), "STATUSVIEW_CUSTOM_ERROR")
         delay(2 * 1000)
-        binding.statusView.showCustom(R.drawable.ic_android_black_24dp, "I'm Here" , "Click Me", View.OnClickListener {
-            Log.e(TAG, "showCustom Button clicked")
-        })
+        binding.statusView.showCustom(CustomStatusLoadingBinding.inflate(layoutInflater), "STATUSVIEW_CUSTOM_1")
         delay(2 * 1000)
-        val view = binding.statusView.showCustom(R.layout.custom_status_error)
+        val view = binding.statusView.showCustom(CustomStatusErrorBinding.inflate(layoutInflater))
         val messageTextView = view.findViewById<TextView>(R.id.messageTextView)
         messageTextView.text = "Changed Text From Code"
         delay(2 * 1000)
@@ -75,12 +76,8 @@ class MainActivity : AppCompatActivity() {
 
     private suspend fun test2(){
         delay(2 * 1000)
-        val view = binding.statusView.showCustom(R.layout.custom_status_error, "STATUSVIEW_MYCUSTOM")
-        val messageTextView = view.findViewById<TextView>(R.id.messageTextView)
-        messageTextView.text = "Changed Text From Code"
-        delay(2 * 1000)
+        val view = binding.statusView.showLoading()
+        delay(6 * 1000)
         binding.statusView.showContent()
-        delay(2 * 1000)
-        binding.statusView.showCustom(R.layout.custom_status_error, "STATUSVIEW_MYCUSTOM")
     }
 }
